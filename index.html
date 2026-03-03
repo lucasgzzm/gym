@@ -2,105 +2,140 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Body Strong | Studio Fitness</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* RESET Y VARIABLES */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        /* RESET PARA EVITAR DIFERENCIAS ENTRE NAVEGADORES */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Montserrat', sans-serif; 
+            -webkit-font-smoothing: antialiased; /* Suaviza fuentes en Safari */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         :root { --rojo: #E33E38; --negro: #000000; --gris-fondo: #F9F9F9; }
 
-        body { background-color: #fff; overflow-x: hidden; }
+        body { background-color: #fff; overflow-x: hidden; width: 100%; }
 
-        /* NAVEGACIÓN BASE */
-        header { width: 100%; padding: 40px 0; display: flex; justify-content: center; position: relative; z-index: 100; }
+        /* NAVEGACIÓN - CORRECCIÓN PARA SAFARI */
+        header { 
+            width: 100%; 
+            padding: 50px 0; 
+            display: flex; 
+            justify-content: center; 
+            position: relative; 
+            z-index: 100; 
+        }
         
         .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            background-color: var(--negro); width: 90%; max-width: 1100px;
-            height: 60px; border-radius: 100px; padding: 0 30px; position: relative;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background-color: var(--negro); 
+            width: 90%; 
+            max-width: 1100px;
+            height: 60px; 
+            border-radius: 100px; 
+            padding: 0 30px; 
+            position: relative;
+            /* Safari Fix: asegura que los elementos hijos no se corten */
+            isolation: isolate; 
         }
 
         .logo { display: flex; align-items: center; gap: 10px; color: white; text-decoration: none; }
         .logo-icon { width: 30px; height: 30px; background-color: var(--rojo); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 900; }
-        .logo-text strong { font-size: 0.9rem; line-height: 1; display: block; }
-        .logo-text span { font-size: 0.5rem; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* MENÚ ESCRITORIO */
         .nav-links { display: flex; list-style: none; height: 100%; align-items: center; }
+        
+        /* BOTÓN ACTIVO - EL CORAZÓN DEL PROBLEMA EN SAFARI */
         .nav-link {
-            color: white; text-decoration: none; font-weight: 800; font-size: 0.8rem;
-            padding: 0 20px; height: 100%; display: flex; align-items: center;
-            transition: all 0.2s; cursor: pointer; border: none; background: none;
+            color: white; 
+            text-decoration: none; 
+            font-weight: 800; 
+            font-size: 0.8rem;
+            padding: 0 20px; 
+            height: 100%; 
+            display: inline-flex; /* Safari prefiere inline-flex para centrar texto */
+            align-items: center;
+            transition: all 0.2s ease-in-out; 
+            cursor: pointer; 
+            border: none; 
+            background: none;
+            -webkit-appearance: none; /* Quita estilos por defecto de botones en iOS */
         }
 
         .nav-link.active {
-            background-color: var(--negro); height: 80px; border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 110;
+            background-color: var(--negro); 
+            height: 90px; /* Sobresale */
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+            z-index: 110;
+            /* Safari Fix: Fuerza la posición para que no se mueva el contenedor */
+            position: relative;
+            margin-top: 0; 
         }
-
-        /* BOTÓN HAMBURGUESA (Oculto por defecto) */
-        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
-        .menu-toggle span { width: 25px; height: 3px; background: white; border-radius: 2px; }
 
         /* HERO SECTION */
-        .hero { height: 80vh; display: flex; align-items: center; position: relative; padding: 0 10%; }
+        .hero { height: 75vh; display: flex; align-items: center; position: relative; padding: 0 10%; }
+        
         .bg-text {
-            position: absolute; font-size: 22vw; font-weight: 900; color: rgba(0,0,0,0.03);
-            z-index: -1; left: 50%; top: 50%; transform: translate(-50%, -50%); white-space: nowrap; user-select: none;
+            position: absolute; 
+            font-size: 22vw; 
+            font-weight: 900; 
+            color: rgba(0,0,0,0.03);
+            z-index: -1; 
+            left: 50%; 
+            top: 50%; 
+            transform: translate(-50%, -50%); 
+            white-space: nowrap; 
+            pointer-events: none; /* Safari Fix: evita que el texto gigante bloquee clics */
+            user-select: none;
         }
-        h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; }
+
+        h1 { font-size: clamp(2.2rem, 8vw, 5rem); font-weight: 900; line-height: 0.95; text-transform: uppercase; }
         .red-text { color: var(--rojo); }
-        .address { margin: 20px 0; font-size: 1rem; color: #555; max-width: 450px; }
-        .btn-main { display: inline-block; background: var(--rojo); color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; }
 
         /* PLANES */
         .planes { padding: 80px 5%; background-color: var(--gris-fondo); }
-        .planes-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto; }
-        .card { background: white; padding: 40px; border-radius: 35px; text-align: center; border: 2px solid transparent; transition: 0.3s; }
-        .card:hover { border-color: var(--rojo); transform: translateY(-5px); }
-        .card h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
-        .price { font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; }
-        .features { list-style: none; text-align: left; margin-bottom: 25px; font-size: 0.85rem; }
-        .features li { padding: 8px 0; border-bottom: 1px solid #eee; }
-        .btn-card { display: block; background: var(--negro); color: white; padding: 14px; border-radius: 50px; text-decoration: none; font-weight: 800; }
+        .planes-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+        }
+        .card { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 35px; 
+            text-align: center; 
+            border: 2px solid transparent; 
+            transition: 0.3s;
+            /* Safari Fix: previene bordes raros en tarjetas */
+            -webkit-mask-image: -webkit-radial-gradient(white, black); 
+        }
 
         /* INSTAGRAM FLOAT */
         .instagram-float {
-            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 200; text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .instagram-float svg { width: 30px; fill: white; }
 
-        /* =========================================
-           ADAPTACIÓN MÓVIL (MEDIA QUERIES) 📱
-           ========================================= */
+        /* RESPONSIVO */
         @media (max-width: 768px) {
-            header { padding: 20px 0; }
-            .navbar { width: 95%; height: 55px; padding: 0 20px; }
-            
-            /* Convertimos el menú en una lista vertical oculta */
-            .nav-links {
-                position: absolute; top: 70px; left: 0; width: 100%;
-                background: var(--negro); flex-direction: column;
-                height: auto; padding: 20px; border-radius: 20px;
-                display: none; /* Se activa con JS */
-            }
-            .nav-links.show { display: flex; }
-            .nav-item { width: 100%; }
-            .nav-link { height: 50px; justify-content: center; width: 100%; }
-            .nav-link.active { height: 50px; margin: 0; }
-
-            .menu-toggle { display: flex; } /* Mostramos hamburguesa */
-
-            .hero { text-align: center; justify-content: center; height: 60vh; }
-            .bg-text { font-size: 35vw; top: 60%; }
-            h1 { font-size: 2.8rem; }
-            
-            .planes { padding: 40px 5%; }
+            .navbar { width: 95%; padding: 0 15px; }
+            .nav-link { padding: 0 12px; font-size: 0.7rem; }
+            .nav-link.active { height: 75px; }
+            .hero { text-align: center; justify-content: center; }
+            .bg-text { font-size: 30vw; }
         }
     </style>
 </head>
@@ -108,19 +143,14 @@
 
     <header>
         <nav class="navbar">
-            <a href="#" class="logo">
+            <div class="logo">
                 <div class="logo-icon">B</div>
                 <div class="logo-text"><strong>BODY STRONG</strong><span>STUDIO FITNESS</span></div>
-            </a>
-            
-            <button class="menu-toggle" onclick="toggleMenu()">
-                <span></span><span></span><span></span>
-            </button>
-
-            <ul class="nav-links" id="navLinks">
-                <li class="nav-item"><button class="nav-link active" onclick="changeTab(this)">INICIO</button></li>
-                <li class="nav-item"><button class="nav-link" onclick="changeTab(this)">PLANES</button></li>
-                <li class="nav-item"><button class="nav-link" onclick="changeTab(this)">MI CUENTA</button></li>
+            </div>
+            <ul class="nav-links">
+                <li><button class="nav-link active" onclick="changeTab(this)">INICIO</button></li>
+                <li><button class="nav-link" onclick="changeTab(this)">PLANES</button></li>
+                <li><button class="nav-link" onclick="changeTab(this)">MI CUENTA</button></li>
             </ul>
         </nav>
     </header>
@@ -130,8 +160,8 @@
         <div class="container">
             <div class="badge">● TALCA, CHILE</div>
             <h1>SUPERA TUS <br> <span class="red-text">LÍMITES</span></h1>
-            <p class="address">Avenida Las Rastras 1545. Entrenamiento Profesional.</p>
-            <a href="#planes" class="btn-main">Ver Matrículas</a>
+            <p style="margin: 20px 0; color: #555;">Entrenamiento Grupal y Personalizado.</p>
+            <a href="#planes" class="btn-main" style="background:var(--rojo); color:white; padding:15px 35px; border-radius:50px; text-decoration:none; font-weight:800; display:inline-block;">Ver Matrículas</a>
         </div>
     </main>
 
@@ -139,21 +169,18 @@
         <div class="planes-container">
             <div class="card">
                 <h3>PLAN<br><span class="red-text">GRUPAL</span></h3>
-                <div class="price">$35.000</div>
-                <ul class="features"><li>Acceso a clases</li><li>Funcional</li><li>Camarines</li></ul>
-                <a href="#" class="btn-card">Elegir</a>
+                <p class="price" style="font-size:2rem; font-weight:900; margin:15px 0;">$35.000</p>
+                <a href="#" style="display:block; background:#000; color:white; padding:12px; border-radius:50px; text-decoration:none; font-weight:700;">Elegir</a>
             </div>
             <div class="card">
                 <h3>SEMI<br><span class="red-text">ASISTIDO</span></h3>
-                <div class="price">$45.000</div>
-                <ul class="features"><li>Guía instructor</li><li>Personalizada</li><li>Máquinas</li></ul>
-                <a href="#" class="btn-card">Elegir</a>
+                <p class="price" style="font-size:2rem; font-weight:900; margin:15px 0;">$45.000</p>
+                <a href="#" style="display:block; background:#000; color:white; padding:12px; border-radius:50px; text-decoration:none; font-weight:700;">Elegir</a>
             </div>
             <div class="card">
                 <h3>PERSONAL<br><span class="red-text">TRAINER</span></h3>
-                <div class="price">$80.000</div>
-                <ul class="features"><li>Entrenador 1 a 1</li><li>Nutrición</li><li>Seguimiento</li></ul>
-                <a href="#" class="btn-card">Elegir</a>
+                <p class="price" style="font-size:2rem; font-weight:900; margin:15px 0;">$80.000</p>
+                <a href="#" style="display:block; background:#000; color:white; padding:12px; border-radius:50px; text-decoration:none; font-weight:700;">Elegir</a>
             </div>
         </div>
     </section>
@@ -163,15 +190,10 @@
     </a>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('show');
-        }
-
         function changeTab(element) {
             const links = document.querySelectorAll('.nav-link');
             links.forEach(link => link.classList.remove('active'));
             element.classList.add('active');
-            if(window.innerWidth <= 768) toggleMenu(); // Cierra menú al elegir
         }
     </script>
 </body>
