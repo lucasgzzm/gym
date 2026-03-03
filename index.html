@@ -2,33 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Body Strong | Studio Fitness</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* RESET PARA EVITAR DIFERENCIAS ENTRE NAVEGADORES */
+        /* RESET TOTAL */
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
-            font-family: 'Montserrat', sans-serif; 
-            -webkit-font-smoothing: antialiased; /* Suaviza fuentes en Safari */
-            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
         }
 
-        :root { --rojo: #E33E38; --negro: #000000; --gris-fondo: #F9F9F9; }
+        :root { 
+            --rojo: #E33E38; 
+            --negro: #000000; 
+            --gris-fondo: #F9F9F9; 
+        }
 
-        body { background-color: #fff; overflow-x: hidden; width: 100%; }
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Evita el scroll horizontal */
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff;
+        }
 
-        /* NAVEGACIÓN - CORRECCIÓN PARA SAFARI */
+        /* NAVEGACIÓN ESTABLE */
         header { 
             width: 100%; 
-            padding: 50px 0; 
+            padding: 60px 20px; 
             display: flex; 
-            justify-content: center; 
-            position: relative; 
-            z-index: 100; 
+            justify-content: center;
         }
         
         .navbar {
@@ -36,106 +41,159 @@
             justify-content: space-between; 
             align-items: center;
             background-color: var(--negro); 
-            width: 90%; 
-            max-width: 1100px;
+            width: 100%;
+            max-width: 1100px; /* No se estira más de esto */
             height: 60px; 
             border-radius: 100px; 
-            padding: 0 30px; 
+            padding: 0 25px; 
             position: relative;
-            /* Safari Fix: asegura que los elementos hijos no se corten */
-            isolation: isolate; 
         }
 
-        .logo { display: flex; align-items: center; gap: 10px; color: white; text-decoration: none; }
-        .logo-icon { width: 30px; height: 30px; background-color: var(--rojo); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: white; 
+            text-decoration: none;
+            flex-shrink: 0; /* No deja que el logo se achique */
+        }
 
-        .nav-links { display: flex; list-style: none; height: 100%; align-items: center; }
-        
-        /* BOTÓN ACTIVO - EL CORAZÓN DEL PROBLEMA EN SAFARI */
+        .logo-icon { 
+            width: 32px; height: 32px; background: var(--rojo); 
+            border-radius: 6px; display: flex; align-items: center; 
+            justify-content: center; font-weight: 900; 
+        }
+
+        .nav-links { 
+            display: flex; 
+            list-style: none; 
+            height: 100%; 
+            align-items: center; 
+        }
+
         .nav-link {
             color: white; 
             text-decoration: none; 
             font-weight: 800; 
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             padding: 0 20px; 
             height: 100%; 
-            display: inline-flex; /* Safari prefiere inline-flex para centrar texto */
+            display: flex; 
             align-items: center;
-            transition: all 0.2s ease-in-out; 
-            cursor: pointer; 
-            border: none; 
+            cursor: pointer;
+            border: none;
             background: none;
-            -webkit-appearance: none; /* Quita estilos por defecto de botones en iOS */
+            transition: 0.2s;
+            white-space: nowrap; /* Evita que el texto del menú se rompa en 2 líneas */
         }
 
+        /* EFECTO ACTIVO - CORREGIDO PARA ESTABILIDAD */
         .nav-link.active {
             background-color: var(--negro); 
-            height: 90px; /* Sobresale */
-            border-radius: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
-            z-index: 110;
-            /* Safari Fix: Fuerza la posición para que no se mueva el contenedor */
-            position: relative;
-            margin-top: 0; 
+            height: 90px; 
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-top: 0;
+            z-index: 10;
         }
 
-        /* HERO SECTION */
-        .hero { height: 75vh; display: flex; align-items: center; position: relative; padding: 0 10%; }
+        /* HERO SECTION - ADAPTABLE */
+        .hero { 
+            min-height: 70vh; 
+            display: flex; 
+            align-items: center; 
+            position: relative; 
+            padding: 40px 10%;
+            width: 100%;
+        }
         
         .bg-text {
             position: absolute; 
-            font-size: 22vw; 
+            font-size: clamp(100px, 20vw, 300px); /* Tamaño controlado */
             font-weight: 900; 
             color: rgba(0,0,0,0.03);
             z-index: -1; 
-            left: 50%; 
-            top: 50%; 
+            left: 50%; top: 50%; 
             transform: translate(-50%, -50%); 
-            white-space: nowrap; 
-            pointer-events: none; /* Safari Fix: evita que el texto gigante bloquee clics */
-            user-select: none;
+            white-space: nowrap;
+            pointer-events: none;
         }
 
-        h1 { font-size: clamp(2.2rem, 8vw, 5rem); font-weight: 900; line-height: 0.95; text-transform: uppercase; }
+        .container { 
+            max-width: 1200px; 
+            width: 100%;
+        }
+
+        h1 { 
+            font-size: clamp(2rem, 7vw, 5.5rem); 
+            font-weight: 900; 
+            line-height: 0.95; 
+            text-transform: uppercase;
+        }
+
         .red-text { color: var(--rojo); }
 
-        /* PLANES */
-        .planes { padding: 80px 5%; background-color: var(--gris-fondo); }
+        /* PLANES - GRID AUTO-AJUSTABLE */
+        .planes { 
+            padding: 80px 5%; 
+            background-color: var(--gris-fondo); 
+        }
+
         .planes-container { 
             display: grid; 
+            /* Esta línea es la clave: se adapta según el espacio disponible */
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 25px; 
-            max-width: 1100px; 
+            gap: 30px; 
+            max-width: 1200px; 
             margin: 0 auto; 
         }
+
         .card { 
             background: white; 
-            padding: 40px; 
-            border-radius: 35px; 
-            text-align: center; 
-            border: 2px solid transparent; 
+            padding: 50px 30px; 
+            border-radius: 40px; 
+            text-align: center;
             transition: 0.3s;
-            /* Safari Fix: previene bordes raros en tarjetas */
-            -webkit-mask-image: -webkit-radial-gradient(white, black); 
+            border: 2px solid transparent;
         }
+
+        .card:hover { border-color: var(--rojo); transform: translateY(-10px); }
 
         /* INSTAGRAM FLOAT */
         .instagram-float {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 200; text-decoration: none;
-            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 999;
         }
         .instagram-float svg { width: 30px; fill: white; }
 
-        /* RESPONSIVO */
+        /* MEDIA QUERIES PARA PUNTOS CRÍTICOS */
+        
+        /* Pantallas medianas (Tablets/Laptops pequeñas) */
+        @media (max-width: 1024px) {
+            .navbar { width: 95%; }
+            .hero { padding: 40px 5%; }
+        }
+
+        /* Pantallas pequeñas (Móviles) */
         @media (max-width: 768px) {
-            .navbar { width: 95%; padding: 0 15px; }
-            .nav-link { padding: 0 12px; font-size: 0.7rem; }
-            .nav-link.active { height: 75px; }
-            .hero { text-align: center; justify-content: center; }
+            header { padding: 30px 10px; }
+            .navbar { height: 55px; padding: 0 15px; }
+            .logo-text { display: none; } /* Oculta texto de logo si hay poco espacio */
+            
+            .nav-link { padding: 0 12px; font-size: 0.75rem; }
+            .nav-link.active { height: 75px; border-radius: 12px; }
+
+            .hero { text-align: center; justify-content: center; min-height: 50vh; }
+            h1 { font-size: 2.5rem; }
             .bg-text { font-size: 30vw; }
+        }
+
+        /* Para evitar deformación en pantallas mini (iPhone SE, etc) */
+        @media (max-width: 380px) {
+            .nav-link { padding: 0 8px; font-size: 0.65rem; }
+            .navbar { padding: 0 10px; }
         }
     </style>
 </head>
@@ -143,10 +201,10 @@
 
     <header>
         <nav class="navbar">
-            <div class="logo">
+            <a href="#" class="logo">
                 <div class="logo-icon">B</div>
-                <div class="logo-text"><strong>BODY STRONG</strong><span>STUDIO FITNESS</span></div>
-            </div>
+                <div class="logo-text"><strong>BODY STRONG</strong></div>
+            </a>
             <ul class="nav-links">
                 <li><button class="nav-link active" onclick="changeTab(this)">INICIO</button></li>
                 <li><button class="nav-link" onclick="changeTab(this)">PLANES</button></li>
@@ -158,29 +216,29 @@
     <main class="hero">
         <div class="bg-text">BODY STRONG</div>
         <div class="container">
-            <div class="badge">● TALCA, CHILE</div>
+            <div class="badge" style="background:#FFEBEB; padding:5px 15px; border-radius:50px; font-size:0.7rem; font-weight:900; margin-bottom:20px; display:inline-block;">● TALCA, CHILE</div>
             <h1>SUPERA TUS <br> <span class="red-text">LÍMITES</span></h1>
-            <p style="margin: 20px 0; color: #555;">Entrenamiento Grupal y Personalizado.</p>
-            <a href="#planes" class="btn-main" style="background:var(--rojo); color:white; padding:15px 35px; border-radius:50px; text-decoration:none; font-weight:800; display:inline-block;">Ver Matrículas</a>
+            <p style="margin: 20px 0; color: #666; max-width: 500px;">Entrenamiento Grupal, Semi asistido y Personalizado.</p>
+            <a href="#planes" style="background:var(--rojo); color:white; padding:16px 40px; border-radius:50px; text-decoration:none; font-weight:800; display:inline-block;">Ver Matrículas</a>
         </div>
     </main>
 
     <section id="planes" class="planes">
         <div class="planes-container">
             <div class="card">
-                <h3>PLAN<br><span class="red-text">GRUPAL</span></h3>
-                <p class="price" style="font-size:2rem; font-weight:900; margin:15px 0;">$35.000</p>
-                <a href="#" style="display:block; background:#000; color:white; padding:12px; border-radius:50px; text-decoration:none; font-weight:700;">Elegir</a>
+                <h3 style="font-weight:900; text-transform:uppercase;">PLAN<br><span class="red-text">GRUPAL</span></h3>
+                <p style="font-size:2.5rem; font-weight:900; margin:20px 0;">$35.000</p>
+                <a href="#" style="display:block; background:#000; color:white; padding:15px; border-radius:50px; text-decoration:none; font-weight:800;">Elegir</a>
             </div>
             <div class="card">
-                <h3>SEMI<br><span class="red-text">ASISTIDO</span></h3>
-                <p class="price" style="font-size:2rem; font-weight:900; margin:15px 0;">$45.000</p>
-                <a href="#" style="display:block; background:#000; color:white; padding:12px; border-radius:50px; text-decoration:none; font-weight:700;">Elegir</a>
+                <h3 style="font-weight:900; text-transform:uppercase;">SEMI<br><span class="red-text">ASISTIDO</span></h3>
+                <p style="font-size:2.5rem; font-weight:900; margin:20px 0;">$45.000</p>
+                <a href="#" style="display:block; background:#000; color:white; padding:15px; border-radius:50px; text-decoration:none; font-weight:800;">Elegir</a>
             </div>
             <div class="card">
-                <h3>PERSONAL<br><span class="red-text">TRAINER</span></h3>
-                <p class="price" style="font-size:2rem; font-weight:900; margin:15px 0;">$80.000</p>
-                <a href="#" style="display:block; background:#000; color:white; padding:12px; border-radius:50px; text-decoration:none; font-weight:700;">Elegir</a>
+                <h3 style="font-weight:900; text-transform:uppercase;">PERSONAL<br><span class="red-text">TRAINER</span></h3>
+                <p style="font-size:2.5rem; font-weight:900; margin:20px 0;">$80.000</p>
+                <a href="#" style="display:block; background:#000; color:white; padding:15px; border-radius:50px; text-decoration:none; font-weight:800;">Elegir</a>
             </div>
         </div>
     </section>
